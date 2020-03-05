@@ -133,16 +133,16 @@ class Cangjie {
         let w = 1
         let h = 1
         if(nums.length >= 1) {
-            x = y = nums[0]
-            w = h = (1 - x*2)
+            w = h = nums[0]
+            x = y = (1 - w) / 2
         }
         if(nums.length >= 2) {
-            y = nums[1]
-            h = (1 - y*2)
+            h = nums[1]
+            y = (1 - h) / 2
         }
         if(nums.length == 4) {
-            w = nums[2]
-            h = nums[3]
+            x = nums[2]
+            y = nums[3]
         }
         return {x, y, w, h}
     }
