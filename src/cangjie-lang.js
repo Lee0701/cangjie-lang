@@ -1,11 +1,63 @@
 
 class CangjieCharacter {
-    constructor(x, y, w, h, data) {
+    constructor(x, y, w, h, data, from=0, to=-1) {
         this.x = x
         this.y = y
         this.w = w
         this.h = h
         this.data = data
+
+        const count = this.count()
+        this.processFrom(from)
+        if(to !== -1) this.processTo(count - to)
+        this.cleanUp()
+    }
+    count() {
+        if(typeof this.data === 'string' && this.data !== 'Z') return 1
+        if(Array.isArray(this.data)) {
+            let sum = 0
+            for(const child of this.data) {
+                sum += child.count()
+            }
+            return sum
+        }
+        return 0
+    }
+    processFrom(from) {
+        if(Array.isArray(this.data)) {
+            for(const child of this.data) {
+                if(from <= 0) break
+                if(child && typeof child.data === 'string' && child.data !== 'Z') {
+                    this.data[this.data.indexOf(child)] = undefined
+                    from -= 1
+                }
+                else if(Array.isArray(child.data)) {
+                    from = child.processFrom(from)
+                }
+            }
+        }
+        return from
+    }
+    processTo(to) {
+        if(Array.isArray(this.data)) {
+            for(const child of this.data.reverse()) {
+                if(to <= 0) break
+                if(child && typeof child.data === 'string' && child.data !== 'Z') {
+                    this.data[this.data.indexOf(child)] = undefined
+                    to -= 1
+                }
+                else if(Array.isArray(child.data)) {
+                    to = child.processTo(to)
+                }
+            }
+        }
+        return to
+    }
+    cleanUp() {
+        if(Array.isArray(this.data)) {
+            this.data = this.data.filter(child => child)
+            this.data.forEach(child => child.cleanUp())
+        }
     }
     render(ctx, x, y, w, h) {
         x += this.x * w
@@ -117,6 +169,20 @@ class Cangjie {
         const parseTerm = () => {
             let ch = next()
 
+            let from = 0
+            if(ch >= '0' && ch <= '9') {
+                from = ''
+                for( ; ch >= '0' && ch <= '9' ; ch = next()) from += ch
+                from = parseInt(from)
+            }
+            let to = -1
+            if(ch === '~') {
+                ch = next()
+                to = ''
+                for( ; ch >= '0' && ch <= '9' ; ch = next()) to += ch
+                to = parseInt(to)
+            }
+
             let result = null
             if(ch === '(') result = [parseCombiner()]
             else {
@@ -135,9 +201,9 @@ class Cangjie {
                     nums.push(num / (denom === 0 ? 10 : denom))
                 }
                 const {x, y, w, h} = this.parseNums(nums)
-                return new CangjieCharacter(x, y, w, h, result)
+                return new CangjieCharacter(x, y, w, h, result, from, to)
             } else {
-                return new CangjieCharacter(0, 0, 1, 1, result)
+                return new CangjieCharacter(0, 0, 1, 1, result, from, to)
             }
         }
 
