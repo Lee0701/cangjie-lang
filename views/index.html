@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <script src="/cangjie-lang.js"></script>
+</head>
+<script>
+
+    const data = {
+        '一': '0012H',
+        '丨': '1200V',
+        '丿': '0000T',
+
+        '二': '|1400一一',
+        '三': ':1500一|1400一一',
+        '十': '+一丨',
+        '千': '+:1514丿Z;+一00201180丨',
+        '口': '++V;HV;00111111H',
+        '日': '+9000+++V;HV;一;00111111H;Z',
+        '曰': '+++V;HV;00129000H;00111111H',
+        '目': '+9000+++V;HV;+!一Z:Z一;00111111H;Z',
+        '田': '++++V;HV;一;丨;00111111H',
+        '囗': '++V;HV;00111111H',
+
+        '舌': '!千1500口',
+    }
+
+    window.onload = function() {
+        const cangjie = new Cangjie(data)
+        
+        const canvas = document.getElementById('canvas')
+        const ctx = canvas.getContext('2d')
+
+        const margin = 8
+
+        const x = margin
+        const y = margin
+        const w = canvas.width - margin*2
+        const h = canvas.height - margin*2
+
+        ctx.strokeStyle = 'black'
+        ctx.lineWidth = 6
+        ctx.lineCap = 'square'
+
+        document.getElementById('search').onsubmit = function(e) {
+            e.preventDefault()
+            const str = document.getElementById('input').value
+
+            const char = cangjie.parse(str)
+            console.log(JSON.stringify(char, null, 2))
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            char.render(ctx, x, y, w, h)
+        }
+
+    }
+</script>
+<body>
+    <canvas id="canvas" width="128" height="128"></canvas>
+    <form id="search">
+        <input type="text" id="input">
+        <input type="submit">
+    </form>
+</body>
+</html>
