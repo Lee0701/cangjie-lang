@@ -20,12 +20,12 @@ class CangjieCharacter {
         } else if(typeof this.data === 'string') {
             ctx.beginPath()
             if(this.data === 'H') {
-                ctx.moveTo(x, 0)
-                ctx.lineTo(x + w, 0)
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y)
                 ctx.stroke()
             } else if(this.data === 'SH') {
-                ctx.moveTo(0, y + h)
-                ctx.lineTo(0 + w, y)
+                ctx.moveTo(x, y + h)
+                ctx.lineTo(x + w, y)
                 ctx.stroke()
             } else if(this.data === 'U') {
                 ctx.moveTo(x, y + h)
@@ -61,13 +61,13 @@ class CangjieCharacter {
 }
 
 const combiners = {
-    '.': [{x: 0, y: 0, w: 1, h: 1}],
     '+': [{x: 0, y: 0, w: 1, h: 1}, {x: 0, y: 0, w: 1, h: 1}],
     '-': [{x: 0, y: 0, w: 0.5, h: 1}, {x: 0.5, y: 0, w: 0.5, h: 1}],
     '|': [{x: 0, y: 0, w: 1, h: 0.5}, {x: 0, y: 0.5, w: 1, h: 0.5}],
     '=': [{x: 0, y: 0, w: 0.33, h: 1}, {x: 0.33, y: 0, w: 0.66, h: 1}],
     ':': [{x: 0, y: 0, w: 1, h: 0.33}, {x: 0, y: 0.33, w: 1, h: 0.66}],
     '!': [{x: 0, y: 0, w: 1, h: 0.66}, {x: 0, y: 0.66, w: 1, h: 0.33}],
+    '#': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.125, y: 0.125, w: 0.75, h: 0.75}],
 }
 
 class Cangjie {
@@ -97,33 +97,39 @@ class Cangjie {
     
     parse(arr) {
         if(typeof arr === 'string') arr = arr.split('')
-        let num = null
-        const nums = []
-        while(arr.length) {
-            const ch = arr.shift().toUpperCase()
-            if(ch === ';') continue
-            else if(ch >= '0' && ch <= '9') {
-                if(num === null) num = parseInt(ch)
-                else {
-                    nums.push(num / (ch === '0' ? 10 : parseInt(ch)))
-                    num = null
-                }
-            }
-            else if(Object.keys(combiners).includes(ch)) {
-                const {x, y, w, h} = this.parseNums(nums)
-                const children = combiners[ch].map(c => new CangjieCharacter(c.x, c.y, c.w, c.h, [this.parse(arr)]))
-                return new CangjieCharacter(x, y, w, h, children)
-            }
-            else if(ch >= 'A' && ch <= 'Z') {
-                let token = ch
-                while(arr.length && arr[0].toUpperCase() >= 'A' && arr[0].toUpperCase() <= 'Z') token += arr.shift().toUpperCase()
-                const {x, y, w, h} = this.parseNums(nums)
-                return new CangjieCharacter(x, y, w, h, token)
-            } else {
-                const {x, y, w, h} = this.parseNums(nums)
-                return new CangjieCharacter(x, y, w, h, [this.parse(this.data[ch])])
-            }
+
+        const next = () => (arr.length) ? arr.shift().toUpperCase() : null
+
+        const parseCombiner = () => {
+            const left = parseTerm()
+            const ch = next()
+            const c = combiners[ch]
+            if(c) {
+                const right = parseCombiner()
+                return new CangjieCharacter(0, 0, 1, 1, [left, right].map((char, i) => new CangjieCharacter(c[i].x, c[i].y, c[i].w, c[i].h, [char])))
+            } else return left
         }
+
+        const parseTerm = () => {
+            let ch = next()
+
+            const nums = []
+            for( ; ch >= '0' && ch <= '9' ; ch = next()) {
+                const num = parseInt(ch)
+                const denom = parseInt(next())
+                nums.push(num / (denom === 0 ? 10 : denom))
+            }
+            const {x, y, w, h} = this.parseNums(nums)
+
+            if(ch === '(') return new CangjieCharacter(x, y,  w, h, [parseCombiner()])
+
+            let token = ch
+            while(arr.length && arr[0].toUpperCase() >= 'A' && arr[0].toUpperCase() <= 'Z') token += next()
+            if(this.data[token]) token = [this.parse(this.data[token])]
+            return new CangjieCharacter(x, y, w, h, token)
+        }
+
+        return parseCombiner()
     }
 }
 
