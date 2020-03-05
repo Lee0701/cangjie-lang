@@ -98,7 +98,11 @@ class Cangjie {
     parse(arr) {
         if(typeof arr === 'string') arr = arr.split('')
 
-        const next = () => (arr.length) ? arr.shift().toUpperCase() : null
+        const next = () => {
+            if(!arr.length) return null
+            while(arr[0] === ' ') arr.shift()
+            return arr.shift().toUpperCase()
+        }
 
         const parseCombiner = () => {
             const left = parseTerm()
@@ -113,20 +117,28 @@ class Cangjie {
         const parseTerm = () => {
             let ch = next()
 
-            const nums = []
-            for( ; ch >= '0' && ch <= '9' ; ch = next()) {
-                const num = parseInt(ch)
-                const denom = parseInt(next())
-                nums.push(num / (denom === 0 ? 10 : denom))
+            let result = null
+            if(ch === '(') result = [parseCombiner()]
+            else {
+                let token = ch
+                while(arr.length && arr[0].toUpperCase() >= 'A' && arr[0].toUpperCase() <= 'Z') token += next()
+                if(this.data[token]) token = [this.parse(this.data[token])]
+                result = token
             }
-            const {x, y, w, h} = this.parseNums(nums)
 
-            if(ch === '(') return new CangjieCharacter(x, y,  w, h, [parseCombiner()])
-
-            let token = ch
-            while(arr.length && arr[0].toUpperCase() >= 'A' && arr[0].toUpperCase() <= 'Z') token += next()
-            if(this.data[token]) token = [this.parse(this.data[token])]
-            return new CangjieCharacter(x, y, w, h, token)
+            if(arr[0] === '@') {
+                next()
+                const nums = []
+                while(arr.length && arr[0].toUpperCase() >= '0' && arr[0].toUpperCase() <= '9') {
+                    const num = parseInt(next())
+                    const denom = parseInt(next())
+                    nums.push(num / (denom === 0 ? 10 : denom))
+                }
+                const {x, y, w, h} = this.parseNums(nums)
+                return new CangjieCharacter(x, y, w, h, result)
+            } else {
+                return new CangjieCharacter(0, 0, 1, 1, result)
+            }
         }
 
         return parseCombiner()
