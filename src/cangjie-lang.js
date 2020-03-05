@@ -169,6 +169,8 @@ class Cangjie {
         const parseTerm = () => {
             let ch = next()
 
+            if(ch === null) throw new Error()
+
             let from = 0
             if(ch >= '0' && ch <= '9') {
                 from = ''
