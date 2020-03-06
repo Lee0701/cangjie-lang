@@ -114,6 +114,37 @@ class CangjieCharacter {
                 ctx.moveTo(x, y)
                 ctx.quadraticCurveTo(x + w*2/3, y + h/2, x + w, y + h)
                 ctx.stroke()
+            } else if(this.data == 'ED') {
+                ctx.moveTo(x, y)
+                ctx.quadraticCurveTo(x + w*2/3, y + h/2, x + w, y + h)
+                ctx.stroke()
+            } else if(this.data == 'LD') {
+                ctx.moveTo(x + w, y)
+                ctx.quadraticCurveTo(x + w*3/4, y + h*2/3, x, y + h)
+                ctx.stroke()
+            } else if(this.data == 'P') {
+                ctx.moveTo(x, y)
+                ctx.quadraticCurveTo(x + w/3, y + h*2/3, x + w, y + h)
+                ctx.stroke()
+            } else if(this.data == 'UP') {
+                ctx.moveTo(x, y + h/5)
+                ctx.lineTo(x + w/10, y)
+                ctx.quadraticCurveTo(x + w/3, y + h*2/3, x + w, y + h)
+                ctx.stroke()
+            } else if(this.data == 'HP') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w/5, y)
+                ctx.quadraticCurveTo(x + w/3, y + h*2/3, x + w, y + h)
+                ctx.stroke()
+            } else if(this.data == 'FP') {
+                ctx.moveTo(x, y)
+                ctx.quadraticCurveTo(x + w/4, y + h, x + w, y + h)
+                ctx.stroke()
+            } else if(this.data == 'UFP') {
+                ctx.moveTo(x, y + h)
+                ctx.lineTo(x + w/10, y)
+                ctx.quadraticCurveTo(x + w/4, y + h, x + w, y + h)
+                ctx.stroke()
             } else if(this.data === 'HV') {
                 ctx.moveTo(x, y)
                 ctx.lineTo(x + w, y)
@@ -145,9 +176,10 @@ const combiners = {
     '!': [{x: 0, y: 0, w: 1, h: 0.66}, {x: 0, y: 0.66, w: 1, h: 0.33}],
     '#': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.125, y: 0.125, w: 0.75, h: 0.75}],
     '^': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.25, y: 0.5, w: 0.5, h: 0.5}],
-    '/': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.125, y: 0.125, w: 0.875, h: 0.875}],
-    '\\': [{x: 0, y: 0, w: 1, h: 1}, {x: 0, y: 0.125, w: 0.875, h: 0.875}],
-    '*': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.125, y: 0, w: 0.75, h: 0.75}],
+    '/': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.25, y: 0.25, w: 0.75, h: 0.75}],
+    '\\': [{x: 0, y: 0, w: 1, h: 1}, {x: 0, y: 0.25, w: 0.75, h: 0.75}],
+    '*': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.25, y: 0, w: 0.5, h: 0.5}],
+    '_': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.25, y: 0, w: 0.75, h: 0.75}],
 }
 
 class Cangjie {
