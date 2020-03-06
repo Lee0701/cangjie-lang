@@ -101,10 +101,34 @@ class CangjieCharacter {
                 ctx.moveTo(x + w, y)
                 ctx.quadraticCurveTo(x + w*2/3, y + h*2/3, x, y + h)
                 ctx.stroke()
+            } else if(this.data === 'FT') {
+                ctx.moveTo(x + w, y)
+                ctx.quadraticCurveTo(x + w*2/3, y + h*2/3, x, y + h)
+                ctx.stroke()
+            } else if(this.data === 'WT') {
+                ctx.moveTo(x + w, y)
+                ctx.lineTo(x + w, y + h/2)
+                ctx.quadraticCurveTo(x + w, y + h*3/4, x, y + h)
+                ctx.stroke()
+            } else if(this.data == 'D') {
+                ctx.moveTo(x, y)
+                ctx.quadraticCurveTo(x + w*2/3, y + h/2, x + w, y + h)
+                ctx.stroke()
             } else if(this.data === 'HV') {
                 ctx.moveTo(x, y)
                 ctx.lineTo(x + w, y)
                 ctx.lineTo(x + w, y + h)
+                ctx.stroke()
+            } else if(this.data === 'HVJ') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y)
+                ctx.lineTo(x + w, y + h)
+                ctx.lineTo(x + w - w/5, y + h)
+                ctx.stroke()
+            } else if(this.data === 'VJ') {
+                ctx.moveTo(x + w, y)
+                ctx.lineTo(x + w, y + h)
+                ctx.lineTo(x + w - w/5, y + h)
                 ctx.stroke()
             }
             ctx.closePath()
@@ -114,12 +138,16 @@ class CangjieCharacter {
 
 const combiners = {
     '+': [{x: 0, y: 0, w: 1, h: 1}, {x: 0, y: 0, w: 1, h: 1}],
-    '-': [{x: 0, y: 0, w: 0.5, h: 1}, {x: 0.5, y: 0, w: 0.5, h: 1}],
+    '-': [{x: 0, y: 0, w: 0.45, h: 1}, {x: 0.6, y: 0, w: 0.45, h: 1}],
     '|': [{x: 0, y: 0, w: 1, h: 0.5}, {x: 0, y: 0.5, w: 1, h: 0.5}],
     '=': [{x: 0, y: 0, w: 0.33, h: 1}, {x: 0.33, y: 0, w: 0.66, h: 1}],
-    ':': [{x: 0, y: 0, w: 1, h: 0.33}, {x: 0, y: 0.33, w: 1, h: 0.66}],
+    ';': [{x: 0, y: 0, w: 1, h: 0.30}, {x: 0, y: 0.34, w: 1, h: 0.66}],
     '!': [{x: 0, y: 0, w: 1, h: 0.66}, {x: 0, y: 0.66, w: 1, h: 0.33}],
     '#': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.125, y: 0.125, w: 0.75, h: 0.75}],
+    '^': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.25, y: 0.5, w: 0.5, h: 0.5}],
+    '/': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.125, y: 0.125, w: 0.875, h: 0.875}],
+    '\\': [{x: 0, y: 0, w: 1, h: 1}, {x: 0, y: 0.125, w: 0.875, h: 0.875}],
+    '*': [{x: 0, y: 0, w: 1, h: 1}, {x: 0.125, y: 0, w: 0.75, h: 0.75}],
 }
 
 class Cangjie {
@@ -140,8 +168,11 @@ class Cangjie {
             h = nums[1]
             y = (1 - h) / 2
         }
-        if(nums.length == 4) {
+        if(nums.length >= 3) {
             x = nums[2]
+            y = nums[2]
+        }
+        if(nums.length == 4) {
             y = nums[3]
         }
         return {x, y, w, h}
