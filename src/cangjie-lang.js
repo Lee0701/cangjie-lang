@@ -84,7 +84,10 @@ class CangjieCharacter {
                 ctx.lineTo(x + w, y)
                 ctx.stroke()
             } else if(this.data === 'DU') {
-                
+                ctx.moveTo(x, y + h - h/5)
+                ctx.lineTo(x + w/10, y + h)
+                ctx.lineTo(x + w, y)
+                ctx.stroke()
             } else if(this.data == 'V') {
                 ctx.moveTo(x, y)
                 ctx.lineTo(x, y + h)
@@ -110,17 +113,22 @@ class CangjieCharacter {
                 ctx.lineTo(x + w, y + h/2)
                 ctx.quadraticCurveTo(x + w, y + h*3/4, x, y + h)
                 ctx.stroke()
-            } else if(this.data == 'D') {
+            } else if(this.data === 'D') {
                 ctx.moveTo(x, y)
                 ctx.quadraticCurveTo(x + w*2/3, y + h/2, x + w, y + h)
                 ctx.stroke()
-            } else if(this.data == 'ED') {
+            } else if(this.data === 'ED') {
                 ctx.moveTo(x, y)
                 ctx.quadraticCurveTo(x + w*2/3, y + h/2, x + w, y + h)
                 ctx.stroke()
-            } else if(this.data == 'LD') {
+            } else if(this.data === 'LD') {
                 ctx.moveTo(x + w, y)
                 ctx.quadraticCurveTo(x + w*3/4, y + h*2/3, x, y + h)
+                ctx.stroke()
+            } else if(this.data === 'WD') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y + h/5)
+                ctx.lineTo(x + w, y + h)
                 ctx.stroke()
             } else if(this.data == 'P') {
                 ctx.moveTo(x, y)
@@ -145,6 +153,16 @@ class CangjieCharacter {
                 ctx.lineTo(x + w/10, y)
                 ctx.quadraticCurveTo(x + w/4, y + h, x + w, y + h)
                 ctx.stroke()
+            } else if(this.data === 'HJ') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y)
+                ctx.lineTo(x + w - w/5, y + h)
+                ctx.stroke()
+            } else if(this.data === 'UJ') {
+                ctx.moveTo(x, y + h)
+                ctx.lineTo(x + w, y)
+                ctx.lineTo(x + w - w/5, y + h)
+                ctx.stroke()
             } else if(this.data === 'HV') {
                 ctx.moveTo(x, y)
                 ctx.lineTo(x + w, y)
@@ -155,6 +173,98 @@ class CangjieCharacter {
                 ctx.lineTo(x + w, y)
                 ctx.lineTo(x + w, y + h)
                 ctx.lineTo(x + w - w/5, y + h)
+                ctx.stroke()
+            } else if(this.data === 'HTJ') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y)
+                ctx.quadraticCurveTo(x + w, y + h*2/3, x + w/2, y + h)
+                ctx.lineTo(x + w/2 - w/5, y + h - h/10)
+                ctx.stroke()
+            } else if(this.data === 'UTJ') {
+                ctx.moveTo(x, y + h)
+                ctx.lineTo(x + w, y)
+                ctx.quadraticCurveTo(x + w, y + h*2/3, x + w/2, y + h)
+                ctx.lineTo(x + w/2 - w/5, y + h - h/10)
+                ctx.stroke()
+            } else if(this.data === 'HVH') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w/2, y)
+                ctx.lineTo(x + w/2, y + h)
+                ctx.lineTo(x + w, y + h)
+                ctx.stroke()
+            } else if(this.data === 'HVU') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w/2, y)
+                ctx.lineTo(x + w/2, y + h)
+                ctx.lineTo(x + w, y + h - h/5)
+                ctx.stroke()
+            } else if(this.data === 'HA') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w/2, y)
+                ctx.bezierCurveTo(x + w/3, y + h, x + w/2, y + h, x + w, y + h)
+                ctx.stroke()
+            } else if(this.data === 'HAJ') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w/2, y)
+                ctx.bezierCurveTo(x + w/3, y + h, x + w/2, y + h, x + w, y + h)
+                ctx.lineTo(x + w, y + h - h/5)
+                ctx.stroke()
+            } else if(this.data === 'HPJ') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w*2/3, y)
+                ctx.quadraticCurveTo(x + w*2/3, y + h*2/3, x + w, y + h)
+                ctx.lineTo(x + w, y + h - h/5)
+                ctx.stroke()
+            } else if(this.data === 'HTAJ') {
+                ctx.moveTo(x + w/4, y)
+                ctx.lineTo(x + w*3/4, y)
+                ctx.bezierCurveTo(-x, y + h, x, y + h, x + w, y + h)
+                ctx.lineTo(x + w, y + h - h/5)
+                ctx.stroke()
+            } else if(this.data === 'HTC') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y)
+                ctx.lineTo(x + w/2, y + h*2/5)
+                ctx.bezierCurveTo(x + w, y + h/2, x + w, y + h, x + w/4, y + h)
+                ctx.stroke()
+            } else if(this.data === 'HTHT') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w*4/5, y)
+                ctx.lineTo(x + w/2, y + h*2/5)
+                ctx.lineTo(x + w, y + h*2/5)
+                ctx.quadraticCurveTo(x + w*2/3, y + h, x + w/4, y + h)
+                ctx.stroke()
+            } else if(this.data === 'HTCJ') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y)
+                ctx.lineTo(x + w/2, y + h*2/5)
+                ctx.bezierCurveTo(x + w, y + h/2, x + w, y + h, x + w*2/3, y + h)
+                ctx.lineTo(x + w*2/3 - w/5, y + h - h/10)
+                ctx.stroke()
+            } else if(this.data === 'HVHV') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w/2, y)
+                ctx.lineTo(x + w/2, y + h/2)
+                ctx.lineTo(x + w, y + h/2)
+                ctx.lineTo(x + w, y + h)
+                ctx.stroke()
+            } else if(this.data === 'HTHTJ') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w*4/5, y)
+                ctx.lineTo(x + w/2, y + h*2/5)
+                ctx.lineTo(x + w, y + h*2/5)
+                ctx.quadraticCurveTo(x + w, y + h, x + w*3/4, y + h)
+                ctx.lineTo(x + w*3/4 - w/5, y + h - h/10)
+                ctx.stroke()
+            } else if(this.data === 'VU') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x, y + h)
+                ctx.lineTo(x + w, y + h - h/5)
+                ctx.stroke()
+            } else if(this.data === 'VH') {
+                ctx.moveTo(x, y)
+                ctx.lienTo(x, y + h)
+                ctx.lineTo(x + w, y + h)
                 ctx.stroke()
             } else if(this.data === 'VJ') {
                 ctx.moveTo(x + w, y)
