@@ -32,7 +32,8 @@
             const str = document.getElementById('input').value
 
             const char = cangjie.parse(str)
-            console.log(JSON.stringify(char, null, 2))
+            document.getElementById('code').innerText = cangjie.data[str] || ''
+            document.getElementById('extracted').innerText = cangjie.extract(str)
 
             ctx.clearRect(0, 0, canvas.width, canvas.height)
             char.render(ctx, x, y, w, h)
@@ -46,5 +47,9 @@
         <input type="text" id="input">
         <input type="submit">
     </form>
+    <h4>Code</h4>
+    <p id="code"></p>
+    <h4>Extracted</h4>
+    <p id="extracted"></p>
 </body>
 </html>
