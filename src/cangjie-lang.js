@@ -163,6 +163,16 @@ class CangjieCharacter {
                 ctx.lineTo(x + w, y)
                 ctx.lineTo(x + w - w/5, y + h)
                 ctx.stroke()
+            } else if(this.data === 'HT') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y)
+                ctx.quadraticCurveTo(x + w*2/3, y + h*2/3, x, y + h)
+                ctx.stroke()
+            } else if(this.data === 'HSV') {
+                ctx.moveTo(x, y)
+                ctx.lineTo(x + w, y)
+                ctx.lineTo(x + w/2, y + h)
+                ctx.stroke()
             } else if(this.data === 'HV') {
                 ctx.moveTo(x, y)
                 ctx.lineTo(x + w, y)
