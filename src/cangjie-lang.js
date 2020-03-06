@@ -296,6 +296,8 @@ Cangjie.DEFAULT_DATA = {
     '人': 'T@591100+P@12341214',
     '入': 'T@12900010+HP@60114000',
     '丷': 'D=(Z-T)',
+    '火': 'LD@18141818+LD@18146818+人',
+    '木': '一@11000014+丨+T@12340014+P@12341214',
 
     '月': '(WT@10110000+HVJ@90111000)+(H@90001013+H@90011023)',
 
@@ -324,8 +326,9 @@ Cangjie.DEFAULT_DATA = {
     '向': '(丿;冂)^口',
     '早': '日@2311|十',
     '草': '艹;早',
+    '間': '門^日',
 }
 
 Cangjie.DEFAULT = new Cangjie(Cangjie.DEFAULT_DATA)
 
-if(module) module.exports = {Cangjie}
+if(typeof module !== 'undefined') module.exports = Cangjie
