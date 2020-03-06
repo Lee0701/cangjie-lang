@@ -2,8 +2,6 @@
 const express = require('express')
 const {Liquid} = require('liquidjs')
 
-const {Cangjie, parse} = require('./dist/cangjie-lang.js')
-
 const app = express()
 const liquid = new Liquid()
 
