@@ -102,7 +102,7 @@ class CangjieCharacter {
                 ctx.stroke()
             } else if(this.data === 'T') {
                 ctx.moveTo(x + w, y)
-                ctx.quadraticCurveTo(x + w*2/3, y + h*2/3, x, y + h)
+                ctx.quadraticCurveTo(x + w*4/5, y + h*2/3, x, y + h)
                 ctx.stroke()
             } else if(this.data === 'FT') {
                 ctx.moveTo(x + w, y)
@@ -166,7 +166,7 @@ class CangjieCharacter {
             } else if(this.data === 'HT') {
                 ctx.moveTo(x, y)
                 ctx.lineTo(x + w, y)
-                ctx.quadraticCurveTo(x + w*2/3, y + h*2/3, x, y + h)
+                ctx.quadraticCurveTo(x + w*4/5, y + h*2/3, x, y + h)
                 ctx.stroke()
             } else if(this.data === 'HSV') {
                 ctx.moveTo(x, y)
